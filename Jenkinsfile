@@ -24,7 +24,7 @@ pipeline {
             steps {
                 echo 'Deliver....'
                 sh '''
-                echo "doing delivery stuff.."
+                echo "changes here to test automatic build.."
                 '''
             }
         }
