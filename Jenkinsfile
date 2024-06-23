@@ -40,7 +40,8 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                echo "Running test.."
+                echo "Running test..."
+                chown -R root:root ~/.dotnet
                 mkdir -p ~/.dotnet  # Create .dotnet directory
                 cd App.E2ETests/tests
                 dotnet test App.E2E.Tests.csproj
