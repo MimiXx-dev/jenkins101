@@ -4,6 +4,16 @@ pipeline {
         pollSCM '* * * * *'
     }
     stages {
+        stage('Clone Repositories') {
+            steps {
+                echo "Cloning Repositories..."
+                // Clone the repository containing the Jenkinsfile
+                checkout scm
+
+                // Clone the repository containing the tests
+                sh 'git clone https://github.com/MimiXx-dev/App.E2ETests.git'
+            }
+        }
         stage('Build') {
             steps {
                 echo "Building.."
@@ -16,7 +26,9 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
-                echo "doing test stuff.."
+                echo "Running test.."
+                cd App.E2ETests/tests
+                dotnet test App.E2E.Tests.csproj
                 '''
             }
         }
