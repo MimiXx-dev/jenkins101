@@ -14,8 +14,17 @@ pipeline {
                 // Clone the repository containing the Jenkinsfile
                 checkout scm
 
-                // Clone the repository containing the tests
-                sh 'git clone https://github.com/MimiXx-dev/App.E2ETests.git'
+                // Clone or update the repository containing the tests
+                script {
+                    def repoDir = "App.E2ETests"
+                    if (fileExists(repoDir)) {
+                        echo "Repository already exists, updating..."
+                        sh "cd ${repoDir} && git pull"
+                    } else {
+                        echo "Cloning repository..."
+                        sh "git clone https://github.com/MimiXx-dev/App.E2ETests.git ${repoDir}"
+                    }
+                }
             }
         }
         stage('Build') {
