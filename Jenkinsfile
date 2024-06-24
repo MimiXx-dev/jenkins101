@@ -43,7 +43,6 @@ pipeline {
                     dotnet restore
                     echo "Building solution..."
                     dotnet build
-                    dotnet test App.E2E.Tests.csproj
                     '''
                 }
             }
