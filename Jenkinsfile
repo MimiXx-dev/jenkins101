@@ -42,8 +42,6 @@ pipeline {
                     sh '''
                     echo "Running test..."
                     cd App.E2ETests/tests
-                    echo "Cleaning solution..."
-                    dotnet clean
                     echo "Restoring nuget pkg..."
                     dotnet restore
                     echo "Building solution..."
