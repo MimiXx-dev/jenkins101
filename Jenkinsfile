@@ -40,6 +40,8 @@ pipeline {
             steps {
                 echo "Testing.."
                 sh '''
+                ls -al
+                pwd
                 echo "Running test..."
                 cd App.E2ETests/tests
                 dotnet test App.E2E.Tests.csproj
