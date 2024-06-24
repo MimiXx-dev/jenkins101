@@ -29,7 +29,11 @@ pipeline {
                 // Run build steps inside Docker container
                 withDockerContainer(args: '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/root/.dotnet -v dotnet-volume:/app -u root:sudo', image: 'mcr.microsoft.com/dotnet/sdk:8.0') {
                     sh '''
-                    echo "doing build stuff.."
+                    echo "Restoring dependencies..."
+                    cd App.E2ETests
+                    dotnet restore
+                    echo "Building the project..."
+                    dotnet build
                     '''
                 }
             }
