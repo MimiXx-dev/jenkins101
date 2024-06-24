@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'mcr.microsoft.com/dotnet/sdk:8.0'
-            args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/root/.dotnet -u=0 -v dotnet-volume:/app'
+            args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/.dotnet -v dotnet-volume:/app'
         }
     }
     triggers {
@@ -44,7 +44,7 @@ pipeline {
                 pwd
                 whoami
                 echo "Running test..."
-                cd App.E2ETests/tests
+                cd root/App.E2ETests/tests
                 dotnet test App.E2E.Tests.csproj
                 '''
             }
