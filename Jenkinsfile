@@ -43,7 +43,7 @@ pipeline {
                 ls -al
                 pwd
                 echo "Running test..."
-                cd root/App.E2ETests/tests
+                cd App.E2ETests/tests
                 dotnet test App.E2E.Tests.csproj
                 '''
             }
