@@ -41,7 +41,6 @@ pipeline {
                 echo "Testing.."
                 sh '''
                 echo "Running test..."
-                mkdir -p $HOME/.dotnet  # Create .dotnet directory if it doesn't exist
                 cd App.E2ETests/tests
                 dotnet test App.E2E.Tests.csproj
                 '''
