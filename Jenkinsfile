@@ -26,12 +26,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building.."
-                // Run build steps inside Docker container
-                withDockerContainer(args: '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/root/.dotnet -v dotnet-volume:/app -u root:sudo', image: 'mcr.microsoft.com/dotnet/sdk:6.0') {
-                    sh '''
-                    echo "doing build stuff.."
-                    '''
-                }
+                sh '''
+                echo "doing build stuff.."
+                '''
             }
         }
         stage('Test') {
