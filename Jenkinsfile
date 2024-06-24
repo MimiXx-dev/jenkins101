@@ -1,10 +1,5 @@
 pipeline {
-    agent any//{
-    //     docker {
-    //         image 'mcr.microsoft.com/dotnet/sdk:8.0'
-    //         args '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/root/.dotnet -v dotnet-volume:/app -u root:sudo'
-    //     }
-    // }
+    agent any
     triggers {
         pollSCM '* * * * *'
     }
@@ -31,19 +26,25 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building.."
-                sh '''
-                echo "doing build stuff.."
-                '''
+                // Run build steps inside Docker container
+                withDockerContainer(args: '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/root/.dotnet -v dotnet-volume:/app -u root:sudo', image: 'mcr.microsoft.com/dotnet/sdk:8.0') {
+                    sh '''
+                    echo "doing build stuff.."
+                    '''
+                }
             }
         }
         stage('Test') {
             steps {
                 echo "Testing.."
-                sh '''
-                echo "Running test..."
-                cd App.E2ETests/tests
-                dotnet test App.E2E.Tests.csproj
-                '''
+                // Run test steps inside Docker container
+                withDockerContainer(args: '-v /var/run/docker.sock:/var/run/docker.sock -v $HOME/.m2:/root/.m2 -v $HOME/.dotnet:/root/.dotnet -v dotnet-volume:/app -u root:sudo', image: 'mcr.microsoft.com/dotnet/sdk:8.0') {
+                    sh '''
+                    echo "Running test..."
+                    cd App.E2ETests/tests
+                    dotnet test App.E2E.Tests.csproj
+                    '''
+                }
             }
         }
         stage('Deliver') {
