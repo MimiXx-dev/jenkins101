@@ -42,7 +42,6 @@ pipeline {
                 sh '''
                 ls -al
                 pwd
-                whoami
                 echo "Running test..."
                 cd root/App.E2ETests/tests
                 dotnet test App.E2E.Tests.csproj
